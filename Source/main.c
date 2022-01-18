@@ -169,6 +169,9 @@ void setUpTimerforRGBLed(void) {
 *   Application entry point.
 */
 int main(void) {
+  uint16_t r = 0;
+  uint16_t g = 0;
+  uint16_t b = 0;
 
   /* STM32xx HAL library initialization */
   HAL_Init();
@@ -193,13 +196,26 @@ int main(void) {
 
   do {
     
-    BSP_LED_Toggle(LED2);
+    //BSP_LED_Toggle(LED2);
 
-    TIM2->CCR1 = 0;
-    TIM2->CCR2 = 255;
-    TIM2->CCR3 = 255;
+    TIM2->CCR1 = b;
+    TIM2->CCR2 = g;
+    TIM2->CCR3 = r;
 
-    HAL_Delay(1000);
+    r += 5;
+    g += 10;
+    b += 15;
+
+    if(r == 255)
+        r = 0;
+    
+    if(g == 255)
+        g = 0;
+    
+    if(b == 255)
+        b = 0;
+
+    HAL_Delay(100);
   } while (1);
 
 }
